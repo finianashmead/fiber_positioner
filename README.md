@@ -1,5 +1,5 @@
 # fiber_positioner
-CODE PERTAINING TO MY WORK ON R&D FOR A SPECTROGRAPH FIBER POSITIONER
+CODE PERTAINING TO MY WORK ON R&D FOR A "TILTING SPINE" SPECTROGRAPH FIBER POSITIONER
 
 some essential codes were put together by Dr. Tom Diehl and Dr. Alex Drlica-Wagner, including codes to take a picture on the camera connected to the Raspberry Pi, identify the pixel coordinates of the fiber tip in the picture, communicate with the Keysight EDU33212A waveform generator, and define a circle in pixel coordinates corresponding to the fiber positioner's range of motion.
 [LIST THESE CODES HERE]
