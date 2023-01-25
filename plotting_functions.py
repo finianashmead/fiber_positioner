@@ -115,3 +115,66 @@ def chrono_pix(data):
     ax4.set_ylabel('Y_pix')
     ax4.set_title('CH2 Y_pix')
     ax4.legend(loc='upper left')  
+
+def volt_disp_linear2(data):
+    '''
+    this plots the results of the automated test run using the lower-right panel of runFinianGUI.py (the function run_test in the py file)
+    as 2 subplots showing linear fits of the displacement per voltage during the CH1 and CH2 tests ; data should be the path to that file (a csv), 
+    as a string. by default that file is titled test_data
+    '''
+    
+    #used to be separate displacement function
+    data.assign(dx=0.0)
+    data.assign(dy=0.0)
+    data.assign(disp=0.0)
+
+    xs = list(data['X_pix'])
+    ys = list(data['Y_pix'])
+
+    for i in range(len(data)):
+        if i > 0:
+            argx = xs[i] - xs[i-1]
+            argy = ys[i] - ys[i-1]
+            data.loc[i, 'dx'] = argx
+            data.loc[i, 'dy'] = argy
+            disp = (argx**2 + argy**2)**(1/2)
+            data.loc[i, 'disp'] = disp
+         
+    # slice by axis
+    ax1slice = data['Ax_input'] == 1.0
+    ax2slice = data['Ax_input'] == 2.0
+    ax1data = data[ax1slice]
+    ax2data = data[ax2slice]
+    
+    #plotting
+    fig, (ax1, ax2) = plt.subplots(1,2,figsize = (16,8))
+    volts1 = ax1data['V_input']
+    disps1 = ax1data['disp']
+    steps1 = ax1data['Steps_input'].mean()
+    
+    volts2 = ax2data['V_input']
+    disps2 = ax2data['disp']
+    steps2 = ax2data['Steps_input'].mean()   
+    
+    print("STEPS1: ", steps1)
+    print("STEPS2: ", steps2)
+    
+    ax1.scatter(volts1, disps1, alpha=0.7, s=90.)
+    ax1.set_xlabel('voltage input')
+    ax1.set_ylabel('displacement (pixels)')
+    ax1.set_title('CH1 DATA')
+    m1, b1 = np.polyfit(volts1, disps1, 1)
+    move1 = m1 / steps1
+    print("SLOPE1: ", m1)
+    print(move1, " PIXELS/VOLT/STEP CH1")
+    fit1 = ax1.plot(volts1, m1*volts1 + b1, c='r', ls='-.', lw=1.5) 
+    
+    ax2.scatter(volts2, disps2, alpha=0.7, s=90.)
+    ax2.set_xlabel('voltage input')
+    ax2.set_ylabel('displacement (pixels)')
+    ax2.set_title('CH2 DATA')
+    m2, b2 = np.polyfit(volts2, disps2, 1)
+    move2 = m2 / steps2
+    print("SLOPE2: ", m2)
+    print(move2, " PIXELS/VOLT/STEP CH2")
+    fit2 = ax2.plot(volts2, m2*volts2 + b2, c='r', ls='-.', lw=1.5) 
