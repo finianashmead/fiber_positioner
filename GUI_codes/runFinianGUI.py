@@ -106,7 +106,122 @@ def get_tip():
 ## TAKEN FROM TKFUN, MIGHT NEED TO CHANGE SOMEWHAT 
 def circlefit():
     from fit2circle import calc_R, f_2, fitmycircle
-
+    
+    date=str(test_txt5.get())
+    # clear data lists
+    xlistpoints.clear()
+    ylistpoints.clear()
+    
+    # trigger keysight several times to take data
+    finian_keysight_trigger_poltest.trigger_keysight(2.5, 1, pos, 50)
+    
+    time.sleep(15)
+    # take photo
+    i = 0
+    imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+    DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+    imagename=imagename+".jpg"
+    while os.path.exists(imagename) == False:
+        imagename = "test_img" + str(vlabel) + "i" + str(i) + str(axis) + str(d) + date
+        DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+        imagename=imagename+".jpg"
+    else:
+        print("IMAGE TAKEN!")            
+    # find tip
+    print('disp: IMAGENAME: ',imagename)
+    pos = get_tip_pos.gettippos(x, imagename)
+    xi = pos[0]
+    yi = pos[1]
+    xlistpoints.append(xi)
+    ylistpoints.append(yi)
+    print("XLISTPOINTS: ", xlistpoints)
+    print("YLISTPOINTS: ", ylistpoints)
+    imgc = 'ana-' + imagename #might not want to dispay
+    i+=1
+    
+    finian_keysight_trigger_poltest.trigger_keysight(2.5, 1, neg, 70)
+    
+    time.sleep(15)
+    # take photo
+    i = 0
+    imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+    DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+    imagename=imagename+".jpg"
+    while os.path.exists(imagename) == False:
+        imagename = "test_img" + str(vlabel) + "i" + str(i) + str(axis) + str(d) + date
+        DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+        imagename=imagename+".jpg"
+    else:
+        print("IMAGE TAKEN!")            
+    # find tip
+    print('disp: IMAGENAME: ',imagename)
+    pos = get_tip_pos.gettippos(x, imagename)
+    xi = pos[0]
+    yi = pos[1]
+    xlistpoints.append(xi)
+    ylistpoints.append(yi)
+    print("XLISTPOINTS: ", xlistpoints)
+    print("YLISTPOINTS: ", ylistpoints)
+    imgc = 'ana-' + imagename #might not want to dispay
+    i+=1
+    
+    finian_keysight_trigger_poltest.trigger_keysight(1.5, 1, pos, 10)
+    
+    time.sleep(10)
+    
+    finian_keysight_trigger_poltest.trigger_keysight(2.5, 2, pos, 50)
+    
+    time.sleep(15)
+    # take photo
+    i = 0
+    imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+    DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+    imagename=imagename+".jpg"
+    while os.path.exists(imagename) == False:
+        imagename = "test_img" + str(vlabel) + "i" + str(i) + str(axis) + str(d) + date
+        DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+        imagename=imagename+".jpg"
+    else:
+        print("IMAGE TAKEN!")            
+    # find tip
+    print('disp: IMAGENAME: ',imagename)
+    pos = get_tip_pos.gettippos(x, imagename)
+    xi = pos[0]
+    yi = pos[1]
+    xlistpoints.append(xi)
+    ylistpoints.append(yi)
+    print("XLISTPOINTS: ", xlistpoints)
+    print("YLISTPOINTS: ", ylistpoints)
+    imgc = 'ana-' + imagename #might not want to dispay
+    i+=1
+    
+    finian_keysight_trigger_poltest.trigger_keysight(2.5, 2, neg, 70)
+    
+    time.sleep(15)
+    # take photo
+    i = 0
+    imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+    DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+    imagename=imagename+".jpg"
+    while os.path.exists(imagename) == False:
+        imagename = "test_img" + str(vlabel) + "i" + str(i) + str(axis) + str(d) + date
+        DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+        imagename=imagename+".jpg"
+    else:
+        print("IMAGE TAKEN!")            
+    # find tip
+    print('disp: IMAGENAME: ',imagename)
+    pos = get_tip_pos.gettippos(x, imagename)
+    xi = pos[0]
+    yi = pos[1]
+    xlistpoints.append(xi)
+    ylistpoints.append(yi)
+    print("XLISTPOINTS: ", xlistpoints)
+    print("YLISTPOINTS: ", ylistpoints)
+    imgc = 'ana-' + imagename #might not want to dispay
+    i+=1
+    
+    #original circlefit starting point
     if len(xlistpoints) > 2:
         control = '__main__'
         print('XLISTPOINTS', xlistpoints)
