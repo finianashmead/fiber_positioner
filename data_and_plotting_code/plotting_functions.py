@@ -29,8 +29,8 @@ def position_map(data):
     #ax.scatter(xs, ys, c='k', alpha=1.)
     ax.scatter(xs1, ys1, c='b', alpha=0.5)
     ax.scatter(xs2, ys2, c='g', alpha=0.5)
-    ax.set_xlim(1600., 1920.)
-    ax.set_ylim(555., 875.)
+    ax.set_xlim(1575., 1920.)
+    ax.set_ylim(555., 900.)
     ax.set_xlabel('X_pix')
     ax.set_ylabel('Y_pix')
 
