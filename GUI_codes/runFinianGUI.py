@@ -113,7 +113,7 @@ def circlefit():
     ylistpoints.clear()
     
     # trigger keysight several times to take data
-    finian_keysight_trigger_poltest.trigger_keysight(2.5, 1, pos, 50)
+    finian_keysight_trigger_poltest.trigger_keysight(2.5, 1, 'pos', 50)
     
     time.sleep(15)
     # take photo
@@ -139,7 +139,7 @@ def circlefit():
     imgc = 'ana-' + imagename #might not want to dispay
     i+=1
     
-    finian_keysight_trigger_poltest.trigger_keysight(2.5, 1, neg, 70)
+    finian_keysight_trigger_poltest.trigger_keysight(2.5, 1, 'neg', 70)
     
     time.sleep(15)
     # take photo
@@ -165,11 +165,11 @@ def circlefit():
     imgc = 'ana-' + imagename #might not want to dispay
     i+=1
     
-    finian_keysight_trigger_poltest.trigger_keysight(1.5, 1, pos, 10)
+    finian_keysight_trigger_poltest.trigger_keysight(1.5, 1, 'pos', 10)
     
     time.sleep(10)
     
-    finian_keysight_trigger_poltest.trigger_keysight(2.5, 2, pos, 50)
+    finian_keysight_trigger_poltest.trigger_keysight(2.5, 2, 'pos', 50)
     
     time.sleep(15)
     # take photo
@@ -195,7 +195,7 @@ def circlefit():
     imgc = 'ana-' + imagename #might not want to dispay
     i+=1
     
-    finian_keysight_trigger_poltest.trigger_keysight(2.5, 2, neg, 70)
+    finian_keysight_trigger_poltest.trigger_keysight(2.5, 2, 'neg', 70)
     
     time.sleep(15)
     # take photo
