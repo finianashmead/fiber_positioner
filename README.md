@@ -21,6 +21,3 @@ runFinianGUI3.py [calibration + pixel-coordinate seeking algorithm]
 
 runFinianGUI4.py [calibration + automated test of pixel-coordinate seeking algorithm]
 - completely identical to runFinianGUI3, except this is designed to run a large test of the location-seeking algorithm, and contains the controls to do that rather than the controls to input an individual location that are present in runFinianGUI3. in the bottom-right panel, the X_pix and Y_pix inputs have been replaced with a single N_coords input. This number of random locations will be generated within the range of motion, and the positioner will attempt to reach all of them in order, with Max_iter iterations allowed for each location (as in runFinianGUI3)
-
-
-there are uploaded example calibration data from 01/13/23 (cal_data_0113.csv, calibration_data_0113.csv, written at different points during calibrate), and example data from the automated test run using run_test in runFinianGUI.py (test_data_0113.csv)
