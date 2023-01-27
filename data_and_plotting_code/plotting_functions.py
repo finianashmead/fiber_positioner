@@ -122,7 +122,7 @@ def volt_disp_linear2(data):
     as 2 subplots showing linear fits of the displacement per voltage during the CH1 and CH2 tests ; data should be the path to that file (a csv), 
     as a string. by default that file is titled test_data
     '''
-    
+    data = pd.read_csv(data)
     #used to be separate displacement function
     data.assign(dx=0.0)
     data.assign(dy=0.0)
