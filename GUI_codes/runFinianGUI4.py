@@ -76,6 +76,14 @@ move2 = []
 slope1 = []
 slope2 = []
 
+
+##NEW go_there OUTPUTS:
+N_attempts = []
+how_close = []
+d_travel = []
+target_R = []
+
+
 def dophotoscp():
     imagename = str(txt.get())
     print("IMAGENAME", imagename)
@@ -936,6 +944,10 @@ def go_there():
     axis_inputs.append(0.0)
     dir_inputs.append(0.0)
     steps_inputs.append(0.0)
+    N_attempts.clear()
+    how_close.clear()
+    d_target.clear()
+    target_R.clear()
     
     j = 0
     while j < len(x_coord_list):
@@ -1086,6 +1098,11 @@ def go_there():
                 #imgc = 'ana-' + imagename
                 #imageme.displaylast(x, imgc)                
                 #i = 0
+                ##ADD DATA
+                N_attempts.append(i)
+                how_close.append(round((dx**2 + dy**2)**(0.5), 3))
+                
+                
                 xi = x_ch1test
                 yi = y_ch1test
                 xf = x_coord_list[j]
@@ -1155,6 +1172,12 @@ def go_there():
                 #imgc = 'ana-' + imagename
                 #imageme.displaylast(x, imgc)
                 #i = 0
+                
+                ##ADD NEW DATA
+                N_attempts.append(i)
+                how_close.append(round((dx**2 + dy**2)**(0.5), 3))
+                
+                
                 xi = x_test
                 yi = y_test
                 xf = x_coord_list[j]
@@ -1185,6 +1208,17 @@ def go_there():
     df.to_csv(csvname, index=False)
     print("wrote file: ", str(csvname))
 
+    ##WRITE DATA OUT
+    print("writing target data to csv")
+    print("INPUT_X_COORD_LIST: ", x_coord_list)
+    print("INPUT_Y_COORD_LIST: ", y_coord_list)
+    df = pd.DataFrame(list(zip(*[jlist, x_coord_list, y_coord_list, N_attempts, how_close, d_travel, target_R]))).add_prefix('Col')
+    df.columns = ['J', 'X_pix', 'Y_pix', 'N_attempts', 'how_close', 'd_travel', 'r_target']
+    print("DF: ", df)
+    ### MIGHT WANT TO ADD TEXT BOX TO DEFINE CSV NAME AT A LATER STATE
+    csvname = 'go_there_data_'+str(date)
+    df.to_csv(csvname, index=False)
+    print("wrote file: ", str(csvname))
        
 
 def go_home():
