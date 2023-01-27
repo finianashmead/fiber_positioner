@@ -122,7 +122,7 @@ def circlefit():
     DoPhotoCopy2.takePhotoAndCopy(x,imagename)
     imagename=imagename+".jpg"
     while os.path.exists(imagename) == False:
-        imagename = "test_img" + str(vlabel) + "i" + str(i) + str(axis) + str(d) + date
+        imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
         DoPhotoCopy2.takePhotoAndCopy(x,imagename)
         imagename=imagename+".jpg"
     else:
@@ -143,12 +143,11 @@ def circlefit():
     
     time.sleep(15)
     # take photo
-    i = 0
     imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
     DoPhotoCopy2.takePhotoAndCopy(x,imagename)
     imagename=imagename+".jpg"
     while os.path.exists(imagename) == False:
-        imagename = "test_img" + str(vlabel) + "i" + str(i) + str(axis) + str(d) + date
+        imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
         DoPhotoCopy2.takePhotoAndCopy(x,imagename)
         imagename=imagename+".jpg"
     else:
@@ -169,16 +168,15 @@ def circlefit():
     
     time.sleep(10)
     
-    finian_keysight_trigger_poltest.trigger_keysight(2.5, 2, 'pos', 50)
+    finian_keysight_trigger_poltest.trigger_keysight(2.5, 2, 'neg', 50)
     
     time.sleep(15)
     # take photo
-    i = 0
     imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
     DoPhotoCopy2.takePhotoAndCopy(x,imagename)
     imagename=imagename+".jpg"
     while os.path.exists(imagename) == False:
-        imagename = "test_img" + str(vlabel) + "i" + str(i) + str(axis) + str(d) + date
+        imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
         DoPhotoCopy2.takePhotoAndCopy(x,imagename)
         imagename=imagename+".jpg"
     else:
@@ -195,16 +193,15 @@ def circlefit():
     imgc = 'ana-' + imagename #might not want to dispay
     i+=1
     
-    finian_keysight_trigger_poltest.trigger_keysight(2.5, 2, 'neg', 70)
+    finian_keysight_trigger_poltest.trigger_keysight(2.5, 2, 'pos', 70)
     
     time.sleep(15)
     # take photo
-    i = 0
     imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
     DoPhotoCopy2.takePhotoAndCopy(x,imagename)
     imagename=imagename+".jpg"
     while os.path.exists(imagename) == False:
-        imagename = "test_img" + str(vlabel) + "i" + str(i) + str(axis) + str(d) + date
+        imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
         DoPhotoCopy2.takePhotoAndCopy(x,imagename)
         imagename=imagename+".jpg"
     else:
@@ -230,8 +227,8 @@ def circlefit():
         print("fitresult ",circlecenterx, circlecentery, circleR, chi2)
         
         ## CODE FOR DRAWING CIRCLE ON COPY IMAGE
-        imagename = str(txt.get())
-        imagename=imagename+".jpg"
+        #imagename = str(txt.get())
+        #imagename=imagename+".jpg"
         print('disp: IMAGENAME: ',imagename)
         pos = get_tip_pos.gettippos(x, imagename)
         image = cv2.imread(imagename)
