@@ -1,6 +1,7 @@
 '''this document contains the functions I use to make the plots I use in my research and presentations'''
 
-def position_map(data):
+def position_map(data, arrows=False):
+    
     '''
     this plots the results of the automated test run using the lower-right panel of runFinianGUI.py (the function run_test in the py file)
     as a scatterplot of every fiber tip location recorded in the test, connected in chronological order with black arrows, with data points resulting
@@ -8,6 +9,7 @@ def position_map(data):
     range of motion, circle parameters were last updated 01/24/23 ;
     data should be the path to that file (a csv), as a string. by default that file is titled test_data
     '''
+    
     #load data
     test_data = pd.read_csv(data)
     #slice by axis 
@@ -46,18 +48,13 @@ def position_map(data):
     m1, b1 = np.polyfit(xs1, ys1, 1)
     print("SLOPE1: ", m1)
     fit1 = plt.plot(xs1, m1*xs1 + b1, c='r', ls='-.', lw=0.5) 
+    
+    ##ARROWS BOOLEAN
+    if arrows==True:
+        for i in range(len(xs)-1):
+            ax.arrow(xs[i], ys[i], (xs[i+1]-xs[i]), (ys[i+1]-ys[i]), width=0.5e-4, color='k', head_width=1.2, alpha=0.5, 
+                     length_includes_head=True, head_starts_at_zero=True)
 
-    #i=0
-    #while i < len(xs):
-    for i in range(len(xs)-1):
-        #print('making arrow')
-        ax.arrow(xs[i], ys[i], (xs[i+1]-xs[i]), (ys[i+1]-ys[i]), width=0.5e-4, color='k', head_width=1.2, alpha=0.5, 
-                 length_includes_head=True, head_starts_at_zero=True)
-    #    i+=1
-
-    #m2, b2 = np.polyfit(xs2, ys2, 1)
-    #print("SLOPE2: ", m2)
-    #fit2 = plt.plot(xs2, m2pr*xs2 + b2pr, c='r', ls='-.', lw=1.5) 
 
     circ_1 = plt.Circle((1739,720), 158, color='r', lw=1.5, ls='-.', fill=False)
     ax.add_artist(circ_1)
