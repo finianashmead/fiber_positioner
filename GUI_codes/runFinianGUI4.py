@@ -986,8 +986,10 @@ def go_there():
         ylistpoints.append(yi)
         jlist.append(j)
         print("START LOCATION: xpix: ", xi, " ypix: ", yi)
-        #xlistpoints.append(xi)
-        #ylistpoints.append(yi)
+        
+        ##ADDING DATA TO NEW OUTFILE
+        dist_attempt = ((xf-xi)**2 + (yf-yi)**2)**(1/2)
+        d_target.append(dist_attempt)
        
        
         ### SET UP LOOP:
@@ -1131,7 +1133,6 @@ def go_there():
            
             ### LOCATE TIP AGAIN!
             # take photo
-            #i+=1
             imagename = "go_there_" + str(date) + "_j" + str(j) + "i" + str(i) + 'CH2'
             DoPhotoCopy2.takePhotoAndCopy(x,imagename)
             imagename=imagename+".jpg"
@@ -1190,7 +1191,12 @@ def go_there():
                 print('CURRENT LOCATION: ', 'X_pix: ', x_ch1test, 'Y_pix: ', y_ch1test)
                 xi = x_test
                 yi = y_test
-                print('RESTART LOOP: ITERATION: ', i)
+                if i == max_iter:
+                    print('DIDNT MAKE IT')
+                    how_close.append((dx**2 + dy**2)**(0.5))
+                    N_attempts.append(i)
+                else:
+                    print('RESTART LOOP: ITERATION: ', i)
 
         print("OUT OF LOOP")
         print("TO NEXT COORDINATE")
@@ -1212,12 +1218,12 @@ def go_there():
     print("writing target data to csv")
     print("INPUT_X_COORD_LIST: ", x_coord_list)
     print("INPUT_Y_COORD_LIST: ", y_coord_list)
-    df = pd.DataFrame(list(zip(*[jlist, x_coord_list, y_coord_list, N_attempts, how_close, d_travel, target_R]))).add_prefix('Col')
-    df.columns = ['J', 'X_pix', 'Y_pix', 'N_attempts', 'how_close', 'd_travel', 'r_target']
-    print("DF: ", df)
+    df2 = pd.DataFrame(list(zip(*[jlist, x_coord_list, y_coord_list, N_attempts, how_close, d_travel, target_R]))).add_prefix('Col')
+    df2.columns = ['J', 'X_pix', 'Y_pix', 'N_attempts', 'how_close', 'd_travel', 'r_target']
+    print("DF2: ", df2)
     ### MIGHT WANT TO ADD TEXT BOX TO DEFINE CSV NAME AT A LATER STATE
     csvname = 'go_there_data_'+str(date)
-    df.to_csv(csvname, index=False)
+    df2.to_csv(csvname, index=False)
     print("wrote file: ", str(csvname))
        
 
