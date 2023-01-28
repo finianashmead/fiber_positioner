@@ -1218,8 +1218,8 @@ def go_there():
     print("writing target data to csv")
     print("INPUT_X_COORD_LIST: ", x_coord_list)
     print("INPUT_Y_COORD_LIST: ", y_coord_list)
-    df2 = pd.DataFrame(list(zip(*[jlist, x_coord_list, y_coord_list, N_attempts, how_close, d_travel, target_R]))).add_prefix('Col')
-    df2.columns = ['J', 'X_pix', 'Y_pix', 'N_attempts', 'how_close', 'd_travel', 'r_target']
+    df2 = pd.DataFrame(list(zip(*[jlist, x_coord_list, y_coord_list, N_attempts, how_close, d_target, target_R]))).add_prefix('Col')
+    df2.columns = ['J', 'X_pix', 'Y_pix', 'N_attempts', 'how_close', 'd_target', 'target_R']
     print("DF2: ", df2)
     ### MIGHT WANT TO ADD TEXT BOX TO DEFINE CSV NAME AT A LATER STATE
     csvname = 'go_there_data_'+str(date)
