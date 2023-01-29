@@ -919,8 +919,8 @@ def go_there():
     while len(x_coord_list) < N_coords:
         xc = np.random.randint(1600, 1930)
         yc = np.random.randint(550, 880)
-        lhs = (xc - 1760)**2 + (yc-720)**2
-        if lhs <= (150**2):
+        lhs = (xc - 1739)**2 + (yc-720)**2
+        if lhs <= (158**2):
             x_coord_list.append(xc)
             y_coord_list.append(yc)
             
@@ -990,6 +990,8 @@ def go_there():
         ##ADDING DATA TO NEW OUTFILE
         dist_attempt = ((xf-xi)**2 + (yf-yi)**2)**(1/2)
         d_target.append(dist_attempt)
+        r_attempt = ((xf - 1739)**2 + (yf-720)**2)**(1/2)
+        target_R.append(r_attempt)
        
        
         ### SET UP LOOP:
