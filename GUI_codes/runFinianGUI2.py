@@ -338,13 +338,13 @@ def write_csv():
     
 def run_test():
     ## get inputs from text boxes
-    trials = float(test_txt1.get())
-    step_step=float(test_txt2.get())
-    step_max=float(test_txt3.get())
-    v=int(test_txt4.get())
+    trials = int(test_txt1.get())
+    step_step=int(test_txt2.get())
+    step_max=int(test_txt3.get())
+    v=float(test_txt4.get())
     date=str(test_txt5.get())
     print("args: ", " trials: ", trials, " step_step: ", step_step, " step_max: ", step_max, " v: ", v)
-    step_min = 1.0  #0.0 + v_step
+    step_min = 1  #0.0 + v_step
     step_stop = step_max + step_step
     
     ##reset lists to proper values
@@ -474,7 +474,7 @@ def run_test():
             print("TRIAL " + str(i) + " DONE")
             i += 1
         
-        step += step_step
+        steps += step_step
         
     axis = 1
     steps = step_min
