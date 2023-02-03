@@ -344,7 +344,7 @@ def run_test():
     steps=int(test_txt4.get())
     date=str(test_txt5.get())
     print("args: ", " trials: ", trials, " v_step: ", v_step, " v_max: ", v_max, " steps: ", steps)
-    v_min = 1.0 - v_step  #0.0 + v_step
+    v_min = 2.3 - v_step  #0.0 + v_step
     v_stop = v_max + v_step
     
     ##reset lists to proper values
@@ -385,7 +385,7 @@ def run_test():
     
     ## while loop based on uncert
     v = v_min
-    axis = 2
+    axis = 1
     while v < v_stop:
         i = 0
         while i < trials:
@@ -482,7 +482,7 @@ def run_test():
         
         v += round(v_step, 3)
         
-    axis = 1
+    axis = 2
     v = v_min
     #REPEAT
     while v < v_stop:
