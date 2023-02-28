@@ -65,13 +65,21 @@ axis_inputs =[0]
 dir_inputs = [0]
 steps_inputs = [0]
 
-theta1 = []
-theta2 = []
-move1 = []
-move2 = []
+theta1p = []
+theta2p = []
+move1p = []
+move2p = []
 
-slope1 = []
-slope2 = []
+slope1p = []
+slope2p = []
+
+theta1n = []
+theta2n = []
+move1n = []
+move2n = []
+
+slope1n = []
+slope2n = []
 
 def dophotoscp():
     imagename = str(txt.get())
@@ -235,8 +243,8 @@ def write_csv():
 def calibrate():
     ## get inputs from text boxes
     trials = 5.
-    v1 = 1.3
-    v2 = 1.7
+    v1 = 2.0
+    v2 = 2.0
     steps= 25.
     date=str(date_txt.get())
    
@@ -247,10 +255,14 @@ def calibrate():
     axis_inputs.clear()
     dir_inputs.clear()
     steps_inputs.clear()
-    theta1.clear()
-    theta2.clear()
-    move1.clear()
-    move2.clear()
+    theta1p.clear()
+    theta2p.clear()
+    move1p.clear()
+    move2p.clear()
+    theta1n.clear()
+    theta2n.clear()
+    move1n.clear()
+    move2n.clear()
     v_inputs.append(0.0)
     axis_inputs.append(0.0)
     dir_inputs.append(0.0)
@@ -500,37 +512,69 @@ def calibrate():
             df['dx'][i] = argx
             df['dy'][i] = argy
             df['disp'] = (df['dx']**2 + df['dy']**2)**(1/2)
+            ##NEW ADDITION 2/28/23
+            df['slope'] = df['dy'] / df['dx']
            
     ## CALCULATE ANGLES AND DISP/V/STEP
     ## CALCULATE ANGLES
+    ## NEW 2/28/23: SEPARATING POSITIVE AND NEGATIVE CALIBRATIONS
     ax1slice = df['Ax_input'] == 1.0
     ax2slice = df['Ax_input'] == 2.0
     ax1data = df[ax1slice]
     ax2data = df[ax2slice]
+    ax1pslice = ax1data['Dir_input'] == 'pos'
+    ax1nslice = ax1data['Dir_input'] == 'neg'
+    ax2pslice = ax2data['Dir_input'] == 'pos'
+    ax2nslice = ax2data['Dir_input'] == 'neg'
+    ax1pdata = ax1data[ax1pslice]
+    ax1ndata = ax1data[ax1nslice]
+    ax2pdata = ax2data[ax2pslice]
+    ax2ndata = ax2data[ax2nslice]
    
-    m11, b11 = np.polyfit(ax1data['X_pix'], ax1data['Y_pix'], 1)
-    m21, b21 = np.polyfit(ax2data['X_pix'], ax2data['Y_pix'], 1)
+    #m11, b11 = np.polyfit(ax1data['X_pix'], ax1data['Y_pix'], 1)
+    #m21, b21 = np.polyfit(ax2data['X_pix'], ax2data['Y_pix'], 1)
+    m11p = ax1pdata['slope'].mean()
+    m11n = ax1ndata['slope'].mean()
+    m21p = ax2pdata['slope'].mean()
+    m21n = ax2ndata['slope'].mean()
    
-    slope1.append(m11)
-    slope2.append(m21)
-    theta1.append(np.rad2deg(np.arctan(m11)))
-    theta2.append(np.rad2deg(np.arctan(m21)))
-    print("SLOPE1: ", m11)
-    print("SLOPE2: ", m21)
-   
+    slope1p.append(m11p)
+    slope2p.append(m21p)
+    theta1p.append(np.rad2deg(np.arctan(m11p)))
+    theta2p.append(np.rad2deg(np.arctan(m21p)))
+    slope1n.append(m11n)
+    slope2n.append(m21n)
+    theta1n.append(np.rad2deg(np.arctan(m11n)))
+    theta2n.append(np.rad2deg(np.arctan(m21n)))
+    
+    print("SLOPE1p: ", m11p)
+    print("SLOPE1n: ", m11n)
+    print("SLOPE2p: ", m21p)
+    print("SLOPE2n: ", m21n)  
+    
     ## volt_disp_linear
     ## ax1
-    disps1 = ax1data['disp'].mean()
-    steps1 = ax1data['Steps_input'].mean()
-    m12 = disps1 / steps1
-    move1.append(m12)
-    print(m12, " PIXELS/STEP (CH1)", "V = ", str(v1))
+    disps1p = ax1pdata['disp'].mean()
+    steps1p = ax1pdata['Steps_input'].mean()
+    m12p = disps1p / steps1p
+    move1p.append(m12p)
+    print(m12p, " PIXELS/STEP (CH1 POS)", "V = ", str(v1))
+    disps1n = ax1ndata['disp'].mean()
+    steps1n = ax1ndata['Steps_input'].mean()
+    m12n = disps1n / steps1n
+    move1n.append(m12n)
+    print(m12n, " PIXELS/STEP (CH1 NEG)", "V = ", str(v1))
     ## ax2
-    disps2 = ax2data['disp'].mean()
-    steps2 = ax2data['Steps_input'].mean()
-    m22 = disps2 / steps2
-    move2.append(m22)
-    print(m22, " PIXELS/STEP (CH2)", "V = ", str(v2))
+    disps2p = ax2pdata['disp'].mean()
+    steps2p = ax2pdata['Steps_input'].mean()
+    m22p = disps2p / steps2p
+    move2p.append(m22p)
+    print(m22p, " PIXELS/STEP (CH2 POS)", "V = ", str(v2))
+    disps2n = ax2ndata['disp'].mean()
+    steps2n = ax2ndata['Steps_input'].mean()
+    m22n = disps2n / steps2n
+    move2n.append(m22n)
+    print(m22n, " PIXELS/STEP (CH2 NEG)", "V = ", str(v2))
    
 ##SCATTERPLOT WITH ARROWS + ROM CIRCLE
     xs = df['X_pix']
