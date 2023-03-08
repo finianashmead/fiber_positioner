@@ -809,8 +809,10 @@ def go_there():
     max_iter = int(test_txt3.get())
     date = str(date_txt.get())
    
-    m1 = slope1[0]
-    m2 = slope2[0]
+    m1p = slope1p[0]
+    m1n = slope1n[0]
+    m2p = slope2p[0]
+    m2n = slope2n[0]
     
     xlistpoints.clear()
     ylistpoints.clear()
