@@ -576,100 +576,19 @@ def calibrate():
     move2n.append(m22n)
     print(m22n, " PIXELS/STEP (CH2 NEG)", "V = ", str(v2))
    
-##SCATTERPLOT WITH ARROWS + ROM CIRCLE
-    xs = df['X_pix']
-    ys = df['Y_pix']
-    xs1 = ax1data['X_pix']
-    ys1 = ax1data['Y_pix']
-    xs2 = ax2data['X_pix']
-    ys2 = ax2data['Y_pix']
-
-    fig = plt.figure(1, figsize=(10,10))
-    ax=fig.add_subplot(111)
-    #ax.scatter(xs, ys, c='k', alpha=1.)
-    ax.scatter(xs1, ys1, c='b', alpha=0.5, s=100.)
-    ax.scatter(xs2, ys2, c='g', alpha=0.5, s=100.)
-    ax.set_xlim(1600., 1930.)
-    ax.set_ylim(550., 880.)
-
-    ##ROTATE DATA:
-    xs2p = ys2
-    ys2p = -1*xs2
-    m2p, b2p = np.polyfit(xs2p, ys2p, 1)
-    m2pr = -1./m2p
-    b2pr = -b2p/m2p
-    print(m2pr)
-    print(b2pr)
-
-    m1, b1 = np.polyfit(xs1, ys1, 1)
-    print("SLOPE1: ", m1)
-    fit1 = plt.plot(xs1, m1*xs1 + b1, c='r', ls='-.', lw=0.5)
-
-    #i=0
-    #while i < len(xs):
-    for i in range(len(xs)-1):
-        #print('making arrow')
-        ax.arrow(xs[i], ys[i], (xs[i+1]-xs[i]), (ys[i+1]-ys[i]), width=0.5e-4, color='k', head_width=1.2, alpha=0.5,
-                 length_includes_head=True, head_starts_at_zero=True)
-    #    i+=1
-
-    #m2, b2 = np.polyfit(xs2, ys2, 1)
-    #print("SLOPE2: ", m2)
-    #fit2 = plt.plot(xs2, m2pr*xs2 + b2pr, c='r', ls='-.', lw=1.5)
-
-    circ_1 = plt.Circle((1760,720), 150, color='r', lw=1.5, ls='-.', fill=False)
-    ax.add_artist(circ_1)
-
-    m2, b2 = np.polyfit(xs2, ys2, 1)
-    print("SLOPE2: ", m2)
-    fit2 = plt.plot(xs2, m2*xs2 + b2, c='r', ls='-.', lw=0.5)
-
-    theta1plot = np.rad2deg(np.arctan(m1))
-    theta2plot = np.rad2deg(np.arctan(m2))
-
-    print(theta1plot, theta2plot, (abs(theta1plot)+abs(theta2plot)))
-    
-    ##MAKE ZOOMED FIG
-    fig2 = plt.figure(2, figsize=(10,10))
-    ax=fig2.add_subplot(111)
-    #ax.scatter(xs, ys, c='k', alpha=1.)
-    ax.scatter(xs1, ys1, c='b', alpha=0.5, s=100.)
-    ax.scatter(xs2, ys2, c='g', alpha=0.5, s=100.)
-    ##ROTATE DATA:
-    xs2p = ys2
-    ys2p = -1*xs2
-    m2p, b2p = np.polyfit(xs2p, ys2p, 1)
-    m2pr = -1./m2p
-    b2pr = -b2p/m2p
-    print(m2pr)
-    print(b2pr)
-    m1, b1 = np.polyfit(xs1, ys1, 1)
-    print("SLOPE1: ", m1)
-    fit1 = plt.plot(xs1, m1*xs1 + b1, c='r', ls='-.', lw=0.5)
-    for i in range(len(xs)-1):
-        #print('making arrow')
-        ax.arrow(xs[i], ys[i], (xs[i+1]-xs[i]), (ys[i+1]-ys[i]), width=0.5e-4, color='k', head_width=1.2, alpha=0.5,
-                 length_includes_head=True, head_starts_at_zero=True)
-    circ_2 = plt.Circle((1760,720), 150, color='r', lw=1.5, ls='-.', fill=False)
-    ax.add_artist(circ_2)
-    
-    figname1 = 'pos_scatterplot_'+str(date)+'.png'
-    figname2 = 'pos_scatterplot2_'+str(date)+'.png'
-    fig.savefig(figname1)
-    fig2.savefig(figname2)
-    ## DISPLAY PLOT
-    print('DISPLAY SCATTER')
-    imagemeF.displaylast(x,figname1)
-    imagemeF.displaylast(x,figname2)
-    
+##PLOTTING CODE GOES HERE
+##PRINT STATEMENTS
    
     print("CALIBRATED")
-    print("THETA1: ", theta1)
-    print("THETA2: ", theta2)
-    print("ORTHOGONALITY: ", (abs(theta1[0])+abs(theta2[0])))
-    print("DISP/VOLT/STEP 1: ", move1)
-    print("DISP/VOLT/STEP 2: ", move2)
-   
+    print("THETA1P: ", theta1p)
+    print("THETA1N: ", theta1n)
+    print("THETA2P: ", theta2p)
+    print("THETA2N: ", theta2n)
+    print("DISP/VOLT/STEP 1P: ", move1p)
+    print("DISP/VOLT/STEP 1N: ", move1n)
+    print("DISP/VOLT/STEP 2P: ", move2p)
+    print("DISP/VOLT/STEP 2N: ", move2n)
+    
     ## WRITE DF
     filename = 'calibration_data_' + str(date)
     df.to_csv(filename, index=False)
