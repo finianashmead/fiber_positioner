@@ -814,6 +814,12 @@ def go_there():
     m1n = slope1n[0]
     m2p = slope2p[0]
     m2n = slope2n[0]
+    print(m1p, m1n, m2p, m2n)
+    t1p = theta1p[0]
+    t1n = theta1n[0]
+    t2p = theta2p[0]
+    t2n = theta2n[0]
+    print(t1p, t1n, t2p, t2n)
     
     xlistpoints.clear()
     ylistpoints.clear()
@@ -863,6 +869,22 @@ def go_there():
         print('DELTA_Y: ', delta_y)
         
         ##HERE PLACE CONDITIONAL STATEMENTS TO DETERMINE WHICH COMBINATION OF 1/2/POS/NEG TO USE
+        ##THIS BLOCK DEFINES THE ANGLE TO THE TARGET --> COMPARISON TO MOTION ANGLES WILL DETERMINE WHICH COMBINATION OF 1/2/POS/NEG TO USE
+        if delta_x > 0:
+            if delta_y > 0:
+                target_theta = np.rad2deg(np.arctan(delta_y/delta_x))
+            else:
+                target_theta = 270. + np.rad2deg(np.arctan(delta_x/delta_y))
+        else:
+            if delta_y > 0:
+                target_theta = 180. - np.rad2deg(np.arctan(delta_y/delta_x))
+            else:
+                target_theta = 180. + np.rad2deg(np.arctan(delta_y/delta_x))      
+        print("TARGET THETA: ", target_theta)
+        
+        
+                
+           
         
         b = (delta_y - delta_x*m1) / (m2 - m1)
         a = delta_x - b
