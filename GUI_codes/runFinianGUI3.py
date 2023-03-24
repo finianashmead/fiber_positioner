@@ -815,10 +815,10 @@ def go_there():
     m2p = slope2p[0]
     m2n = slope2n[0]
     print(m1p, m1n, m2p, m2n)
-    t1p = theta1p[0]
-    t1n = theta1n[0]
+    t1p = 180. - theta1p[0]
+    t1n = 360. - theta1n[0]
     t2p = theta2p[0]
-    t2n = theta2n[0]
+    t2n = 180. + theta2n[0]
     print(t1p, t1n, t2p, t2n)
     
     xlistpoints.clear()
@@ -882,9 +882,25 @@ def go_there():
                 target_theta = 180. + np.rad2deg(np.arctan(delta_y/delta_x))      
         print("TARGET THETA: ", target_theta)
         
-        
-                
-           
+        ##THIS BLOCK DEFINES THE MOTION-COORDS QUADRANT, DETERMINES WHICH TWO CH/DIR COMBINATIONS TO USE
+        if target_theta < t2p or target_theta > t1n:
+            print("1N+2P QUADRANT")
+            m1 = m1n
+            m2 = m2p
+        elif target_theta > t2p & target_theta < t1p:
+            print("1P+2P QUADRANT")
+            m1 = m1p
+            m2 = m2p
+        elif target_theta > t1p & target_theta < t2n:
+            print("1P+2N QUADRANT")
+            m1 = m1p
+            m2 = m2n
+        #elif target_theta > t2n & target_theta < t1n:
+        else:
+            print("1N+2N QUADRANT")
+            m1 = m1n
+            m2 = m2n
+
         
         b = (delta_y - delta_x*m1) / (m2 - m1)
         a = delta_x - b
