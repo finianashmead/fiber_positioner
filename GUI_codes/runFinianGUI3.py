@@ -809,6 +809,7 @@ def go_there():
     max_iter = int(test_txt3.get())
     date = str(date_txt.get())
    
+    ##new: split positive and negative
     m1p = slope1p[0]
     m1n = slope1n[0]
     m2p = slope2p[0]
@@ -861,6 +862,8 @@ def go_there():
         print('DELTA_X: ', delta_x)
         print('DELTA_Y: ', delta_y)
         
+        ##HERE PLACE CONDITIONAL STATEMENTS TO DETERMINE WHICH COMBINATION OF 1/2/POS/NEG TO USE
+        
         b = (delta_y - delta_x*m1) / (m2 - m1)
         a = delta_x - b
         udisp1 = (m1**2 + 1)*(0.5)
@@ -871,10 +874,12 @@ def go_there():
         print('DISP2: ', disp2)
 
         ### FACTOR IN VOLTAGES THAT WILL BE USED
+        ## THESE SHOULD BE CHANGED
         v1 = 1.4
         v2 = 2.0
         print(v1, 'VOLTS CH1')
         print(v2, 'VOLTS CH2')
+        ## THESE NEED TO BE SPLIT POS/NEG, MAYBE ASSIGN A VARIABLE AT THE PRIOR CONDITIONAL
         steps_1 = disp1 / (move1[0])
         steps_2 = disp2 / (move2[0])
         print("STEPS1: ", steps_1)
@@ -883,6 +888,7 @@ def go_there():
         ## TRIGGER:
         ##CH1 trigger:
         ### remember to factor in voltage above!!
+        ## RETHINK THESE TIME DELAYS
         if steps_1 < 0:
             d1 = 'pos'
         else:
