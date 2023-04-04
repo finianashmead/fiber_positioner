@@ -243,8 +243,8 @@ def write_csv():
 def calibrate():
     ## get inputs from text boxes
     trials = 5.
-    v1 = 2.0
-    v2 = 2.0
+    v1 = 3.0
+    v2 = 3.0
     steps= 25.
     date=str(date_txt.get())
    
@@ -757,46 +757,84 @@ def load_cal_data():
             df['dx'][i] = argx
             df['dy'][i] = argy
             df['disp'] = (df['dx']**2 + df['dy']**2)**(1/2)
+            ##NEW ADDITION 2/28/23
+            df['slope'] = df['dy'] / df['dx']
            
     ## CALCULATE ANGLES AND DISP/V/STEP
     ## CALCULATE ANGLES
+    ## NEW 2/28/23: SEPARATING POSITIVE AND NEGATIVE CALIBRATIONS
     ax1slice = df['Ax_input'] == 1.0
     ax2slice = df['Ax_input'] == 2.0
     ax1data = df[ax1slice]
     ax2data = df[ax2slice]
-    v1 = round(ax1data['V_input'].mean(), 3)
-    v2 = round(ax2data['V_input'].mean(), 3)
+    ax1pslice = ax1data['Dir_input'] == 'pos'
+    ax1nslice = ax1data['Dir_input'] == 'neg'
+    ax2pslice = ax2data['Dir_input'] == 'pos'
+    ax2nslice = ax2data['Dir_input'] == 'neg'
+    ax1pdata = ax1data[ax1pslice]
+    ax1ndata = ax1data[ax1nslice]
+    ax2pdata = ax2data[ax2pslice]
+    ax2ndata = ax2data[ax2nslice]
+    v1 = ax1data['V_input'].mean()
+    v2 = ax2data['V_input'].mean()
    
-    m11, b11 = np.polyfit(ax1data['X_pix'], ax1data['Y_pix'], 1)
-    m21, b21 = np.polyfit(ax2data['X_pix'], ax2data['Y_pix'], 1)
+    #m11, b11 = np.polyfit(ax1data['X_pix'], ax1data['Y_pix'], 1)
+    #m21, b21 = np.polyfit(ax2data['X_pix'], ax2data['Y_pix'], 1)
+    m11p = ax1pdata['slope'].mean()
+    m11n = ax1ndata['slope'].mean()
+    m21p = ax2pdata['slope'].mean()
+    m21n = ax2ndata['slope'].mean()
    
-    slope1.append(m11)
-    slope2.append(m21)
-    theta1.append(np.rad2deg(np.arctan(m11)))
-    theta2.append(np.rad2deg(np.arctan(m21)))
-    print("SLOPE1: ", m11)
-    print("SLOPE2: ", m21)
-   
+    slope1p.append(m11p)
+    slope2p.append(m21p)
+    theta1p.append(np.rad2deg(np.arctan(m11p)))
+    theta2p.append(np.rad2deg(np.arctan(m21p)))
+    slope1n.append(m11n)
+    slope2n.append(m21n)
+    theta1n.append(np.rad2deg(np.arctan(m11n)))
+    theta2n.append(np.rad2deg(np.arctan(m21n)))
+    
+    print("SLOPE1p: ", m11p)
+    print("SLOPE1n: ", m11n)
+    print("SLOPE2p: ", m21p)
+    print("SLOPE2n: ", m21n)  
+    
     ## volt_disp_linear
     ## ax1
-    disps1 = ax1data['disp'].mean()
-    steps1 = ax1data['Steps_input'].mean()
-    m12 = disps1 / steps1
-    move1.append(m12)
-    print(m12, " PIXELS/STEP (CH1)", "V = ", str(v1))
+    disps1p = ax1pdata['disp'].mean()
+    steps1p = ax1pdata['Steps_input'].mean()
+    m12p = disps1p / steps1p
+    move1p.append(m12p)
+    print(m12p, " PIXELS/STEP (CH1 POS)", "V = ", str(v1))
+    disps1n = ax1ndata['disp'].mean()
+    steps1n = ax1ndata['Steps_input'].mean()
+    m12n = disps1n / steps1n
+    move1n.append(m12n)
+    print(m12n, " PIXELS/STEP (CH1 NEG)", "V = ", str(v1))
     ## ax2
-    disps2 = ax2data['disp'].mean()
-    steps2 = ax2data['Steps_input'].mean()
-    m22 = disps2 / steps2
-    move2.append(m22)
-    print(m22, " PIXELS/STEP (CH2)", "V = ", str(v2))
+    disps2p = ax2pdata['disp'].mean()
+    steps2p = ax2pdata['Steps_input'].mean()
+    m22p = disps2p / steps2p
+    move2p.append(m22p)
+    print(m22p, " PIXELS/STEP (CH2 POS)", "V = ", str(v2))
+    disps2n = ax2ndata['disp'].mean()
+    steps2n = ax2ndata['Steps_input'].mean()
+    m22n = disps2n / steps2n
+    move2n.append(m22n)
+    print(m22n, " PIXELS/STEP (CH2 NEG)", "V = ", str(v2))
+   
+##PLOTTING CODE GOES HERE
+##PRINT STATEMENTS
    
     print("CALIBRATED")
-    print("THETA1: ", theta1)
-    print("THETA2: ", theta2)
-    print("ORTHOGONALITY: ", (abs(theta1[0])+abs(theta2[0])))
-    print("DISP/VOLT/STEP 1: ", move1)
-    print("DISP/VOLT/STEP 2: ", move2)
+    print("THETA1P: ", theta1p)
+    print("THETA1N: ", theta1n)
+    print("THETA2P: ", theta2p)
+    print("THETA2N: ", theta2n)
+    print("DISP/VOLT/STEP 1P: ", move1p)
+    print("DISP/VOLT/STEP 1N: ", move1n)
+    print("DISP/VOLT/STEP 2P: ", move2p)
+    print("DISP/VOLT/STEP 2N: ", move2n)
     
     ## WRITE DF
     filename = 'calibration_data_' + str(date)
@@ -819,7 +857,8 @@ def go_there():
     t1n = 360. - theta1n[0]
     t2p = theta2p[0]
     t2n = 180. + theta2n[0]
-    print(t1p, t1n, t2p, t2n)
+    print('t1p; ', t1p, 't1n: ', t1n, 't2p: ', t2p, 't2n: ', t2n)
+    print(move1p, move1n, move2p, move2n)
     
     xlistpoints.clear()
     ylistpoints.clear()
@@ -865,6 +904,8 @@ def go_there():
         i+=1
         delta_x = xf - xi
         delta_y = yf - yi
+        print('xi: ', xi)
+        print('yi: ', yi)
         print('DELTA_X: ', delta_x)
         print('DELTA_Y: ', delta_y)
         
@@ -885,21 +926,37 @@ def go_there():
         ##THIS BLOCK DEFINES THE MOTION-COORDS QUADRANT, DETERMINES WHICH TWO CH/DIR COMBINATIONS TO USE
         if target_theta < t2p or target_theta > t1n:
             print("1N+2P QUADRANT")
+            d1 = 'neg'
+            d2 = 'pos'
             m1 = m1n
             m2 = m2p
-        elif target_theta > t2p & target_theta < t1p:
+            move1 = move1n
+            move2 = move2p
+        elif (target_theta > t2p) & (target_theta < t1p):
             print("1P+2P QUADRANT")
+            d1 = 'pos'
+            d2 = 'pos'
             m1 = m1p
             m2 = m2p
-        elif target_theta > t1p & target_theta < t2n:
+            move1 = move1p
+            move2 = move2p
+        elif (target_theta > t1p) & (target_theta < t2n):
             print("1P+2N QUADRANT")
+            d1 = 'pos'
+            d2 = 'neg'
             m1 = m1p
             m2 = m2n
+            move1 = move1p
+            move2 = move2n
         #elif target_theta > t2n & target_theta < t1n:
         else:
             print("1N+2N QUADRANT")
+            d1 = 'neg'
+            d2 = 'neg'
             m1 = m1n
             m2 = m2n
+            move1 = move1n
+            move2 = move2n
 
         
         b = (delta_y - delta_x*m1) / (m2 - m1)
@@ -913,8 +970,8 @@ def go_there():
 
         ### FACTOR IN VOLTAGES THAT WILL BE USED
         ## THESE SHOULD BE CHANGED
-        v1 = 1.4
-        v2 = 2.0
+        v1 = 3.0
+        v2 = 3.0
         print(v1, 'VOLTS CH1')
         print(v2, 'VOLTS CH2')
         ## THESE NEED TO BE SPLIT POS/NEG, MAYBE ASSIGN A VARIABLE AT THE PRIOR CONDITIONAL
@@ -927,15 +984,15 @@ def go_there():
         ##CH1 trigger:
         ### remember to factor in voltage above!!
         ## RETHINK THESE TIME DELAYS
-        if steps_1 < 0:
-            d1 = 'pos'
-        else:
-            d1 = 'neg'
-       
-        if steps_2 < 0:
-            d2 = 'neg'
-        else:
-            d2 = 'pos'
+#        if steps_1 < 0:
+#            d1 = 'pos'
+#        else:
+#            d1 = 'neg'
+#       
+#        if steps_2 < 0:
+#            d2 = 'neg'
+#        else:
+#            d2 = 'pos'
            
         if steps_1 < 100.:
             rest1 = 20
