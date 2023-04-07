@@ -913,14 +913,14 @@ def go_there():
         ##THIS BLOCK DEFINES THE ANGLE TO THE TARGET --> COMPARISON TO MOTION ANGLES WILL DETERMINE WHICH COMBINATION OF 1/2/POS/NEG TO USE
         if delta_x > 0:
             if delta_y > 0:
-                target_theta = np.rad2deg(np.arctan(delta_y/delta_x))
+                target_theta = np.rad2deg(np.arctan(abs(delta_y)/abs(delta_x)))
             else:
-                target_theta = 270. + np.rad2deg(np.arctan(delta_x/delta_y))
+                target_theta = 270. + np.rad2deg(np.arctan(abs(delta_x)/abs(delta_y)))
         else:
             if delta_y > 0:
-                target_theta = 180. - np.rad2deg(np.arctan(delta_y/delta_x))
+                target_theta = 180. - np.rad2deg(np.arctan(abs(delta_y)/abs(delta_x)))
             else:
-                target_theta = 180. + np.rad2deg(np.arctan(delta_y/delta_x))      
+                target_theta = 180. + np.rad2deg(np.arctan(abs(delta_y)/abs(delta_x)))     
         print("TARGET THETA: ", target_theta)
         
         ##THIS BLOCK DEFINES THE MOTION-COORDS QUADRANT, DETERMINES WHICH TWO CH/DIR COMBINATIONS TO USE
