@@ -13,6 +13,7 @@ import get_tip_pos
 import finian_keysight_trigger_poltest
 import numpy as np
 #import csv
+import matplotlib.pyplot as plt
 import pandas as pd
 import statistics
 import argparse
@@ -57,6 +58,7 @@ N_txt.grid(row= 7, column=1)
 #def helloCallBack():
 #   messagebox.showinfo( "Hello Python", "Hello World")
 
+tipradii = []
 xlistpoints = []
 ylistpoints = []
 v_inputs = [0]
@@ -96,6 +98,9 @@ def get_tip():
     pos = get_tip_pos.gettippos(x, imagename)
     xi = pos[0]
     yi = pos[1]
+    Ri = pos[2]
+    print("TIP RADIUS: ", Ri)
+    tipradii.append(Ri)
     xlistpoints.append(xi)
     ylistpoints.append(yi)
     print("XLISTPOINTS: ", xlistpoints)
@@ -111,35 +116,10 @@ def circlefit():
     # clear data lists
     xlistpoints.clear()
     ylistpoints.clear()
+    i=0
     
     # trigger keysight several times to take data
-    finian_keysight_trigger_poltest.trigger_keysight(2.5, 1, 'pos', 50)
-    
-    time.sleep(15)
-    # take photo
-    i = 0
-    imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
-    DoPhotoCopy2.takePhotoAndCopy(x,imagename)
-    imagename=imagename+".jpg"
-    while os.path.exists(imagename) == False:
-        imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
-        DoPhotoCopy2.takePhotoAndCopy(x,imagename)
-        imagename=imagename+".jpg"
-    else:
-        print("IMAGE TAKEN!")            
-    # find tip
-    print('disp: IMAGENAME: ',imagename)
-    pos = get_tip_pos.gettippos(x, imagename)
-    xi = pos[0]
-    yi = pos[1]
-    xlistpoints.append(xi)
-    ylistpoints.append(yi)
-    print("XLISTPOINTS: ", xlistpoints)
-    print("YLISTPOINTS: ", ylistpoints)
-    imgc = 'ana-' + imagename #might not want to dispay
-    i+=1
-    
-    finian_keysight_trigger_poltest.trigger_keysight(2.5, 2, 'pos', 70)
+    finian_keysight_trigger_poltest.trigger_keysight(3, 2, 'neg', 50)
     
     time.sleep(15)
     # take photo
@@ -164,7 +144,7 @@ def circlefit():
     imgc = 'ana-' + imagename #might not want to dispay
     i+=1
     
-    finian_keysight_trigger_poltest.trigger_keysight(2.5, 1, 'pos', 50)
+    finian_keysight_trigger_poltest.trigger_keysight(3, 1, 'neg', 50)
     
     time.sleep(15)
     # take photo
@@ -189,7 +169,32 @@ def circlefit():
     imgc = 'ana-' + imagename #might not want to dispay
     i+=1
     
-    finian_keysight_trigger_poltest.trigger_keysight(2.5, 1, 'neg', 50)
+    finian_keysight_trigger_poltest.trigger_keysight(3, 1, 'neg', 50)
+    
+    time.sleep(15)
+    # take photo
+    imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+    DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+    imagename=imagename+".jpg"
+    while os.path.exists(imagename) == False:
+        imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+        DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+        imagename=imagename+".jpg"
+    else:
+        print("IMAGE TAKEN!")            
+    # find tip
+    print('disp: IMAGENAME: ',imagename)
+    pos = get_tip_pos.gettippos(x, imagename)
+    xi = pos[0]
+    yi = pos[1]
+    xlistpoints.append(xi)
+    ylistpoints.append(yi)
+    print("XLISTPOINTS: ", xlistpoints)
+    print("YLISTPOINTS: ", ylistpoints)
+    imgc = 'ana-' + imagename #might not want to dispay
+    i+=1   
+
+    finian_keysight_trigger_poltest.trigger_keysight(3, 2, 'pos', 50)
     
     time.sleep(15)
     # take photo
@@ -214,7 +219,7 @@ def circlefit():
     imgc = 'ana-' + imagename #might not want to dispay
     i+=1
     
-    finian_keysight_trigger_poltest.trigger_keysight(2.5, 2, 'neg', 70)
+    finian_keysight_trigger_poltest.trigger_keysight(3, 2, 'pos', 50)
     
     time.sleep(15)
     # take photo
@@ -239,7 +244,57 @@ def circlefit():
     imgc = 'ana-' + imagename #might not want to dispay
     i+=1
     
-    finian_keysight_trigger_poltest.trigger_keysight(2.5, 1, 'neg', 70)
+    finian_keysight_trigger_poltest.trigger_keysight(3, 1, 'pos', 50)
+    
+    time.sleep(15)
+    # take photo
+    imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+    DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+    imagename=imagename+".jpg"
+    while os.path.exists(imagename) == False:
+        imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+        DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+        imagename=imagename+".jpg"
+    else:
+        print("IMAGE TAKEN!")            
+    # find tip
+    print('disp: IMAGENAME: ',imagename)
+    pos = get_tip_pos.gettippos(x, imagename)
+    xi = pos[0]
+    yi = pos[1]
+    xlistpoints.append(xi)
+    ylistpoints.append(yi)
+    print("XLISTPOINTS: ", xlistpoints)
+    print("YLISTPOINTS: ", ylistpoints)
+    imgc = 'ana-' + imagename #might not want to dispay
+    i+=1  
+
+    finian_keysight_trigger_poltest.trigger_keysight(3, 1, 'pos', 50)
+    
+    time.sleep(15)
+    # take photo
+    imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+    DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+    imagename=imagename+".jpg"
+    while os.path.exists(imagename) == False:
+        imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+        DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+        imagename=imagename+".jpg"
+    else:
+        print("IMAGE TAKEN!")            
+    # find tip
+    print('disp: IMAGENAME: ',imagename)
+    pos = get_tip_pos.gettippos(x, imagename)
+    xi = pos[0]
+    yi = pos[1]
+    xlistpoints.append(xi)
+    ylistpoints.append(yi)
+    print("XLISTPOINTS: ", xlistpoints)
+    print("YLISTPOINTS: ", ylistpoints)
+    imgc = 'ana-' + imagename #might not want to dispay
+    i+=1
+    
+    finian_keysight_trigger_poltest.trigger_keysight(3, 2, 'pos', 50)
     
     time.sleep(15)
     # take photo
@@ -296,8 +351,8 @@ def circlefit():
         ##MAKE SCATTERPLOT
         fig2 = plt.figure(2, figsize=(10,10))
         ax=fig2.add_subplot(111)
-        ax.scatter(xlistpoints, ylistpoints, c='k', alpha=100.)
-        for i in range(len(xs)-1):
+        ax.scatter(xlistpoints, ylistpoints, c='k', alpha=1.)
+        for i in range(len(xlistpoints)-1):
             #print('making arrow')
             ax.arrow(xlistpoints[i], ylistpoints[i], (xlistpoints[i+1]-xlistpoints[i]), (ylistpoints[i+1]-ylistpoints[i]), width=0.5e-4, color='k', 
                      head_width=1.2, alpha=0.5, length_includes_head=True, head_starts_at_zero=True)
@@ -308,7 +363,7 @@ def circlefit():
         fig2.savefig(figname2)
         ## DISPLAY PLOT
         print('DISPLAY SCATTER')
-        imagemeF.displaylast(x,figname2)
+        imageme.displaylast(x,figname2)
 
     else: 
         print("need more data")
@@ -361,13 +416,21 @@ def trigger_keysight():
 def calc_uncertainty():
     xlistpoints.clear()
     ylistpoints.clear()
+    tipradii.clear()
     N = int(N_txt.get())
+    date = str(test_txt5.get())
     i=0
     while i < N:
         #take photo
-        imagename = "unc_img" + str(i)
+        imagename = "unc_img" + str(i) + "_" + date
         DoPhotoCopy2.takePhotoAndCopy(x,imagename)
         imagename=imagename+".jpg"
+        while os.path.exists(imagename) == False:
+            imagename = "unc_img" + str(i) + "_" + date
+            DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+            imagename=imagename+".jpg"
+        else:
+            print("IMAGE TAKEN")
         #imageme.displaylast(x,imagename)
         #result=imagename
         #find tip
@@ -375,6 +438,9 @@ def calc_uncertainty():
         pos = get_tip_pos.gettippos(x, imagename)
         xi = pos[0]
         yi = pos[1]
+        Ri = pos[2]
+        print('TIP RADIUS: ', Ri)
+        tipradii.append(Ri)
         xlistpoints.append(xi)
         ylistpoints.append(yi)
         print("XLISTPOINTS: ", xlistpoints)
@@ -386,10 +452,13 @@ def calc_uncertainty():
         
     x_uncert = np.std(xlistpoints)
     y_uncert = np.std(ylistpoints)
+    R_uncert = np.std(tipradii)
     print("XLISTPOINTS: ", xlistpoints)
     print("YLISTPOINTS: ", ylistpoints)
+    print("TIP RADII: ", tipradii)
     print("X STANDARD DEVIATION: ", x_uncert)
     print("Y STANDARD DEVIATION: ", y_uncert)
+    print("R STANDARD DEVIATION: ", R_uncert)
     
 def write_csv():
     df = pd.DataFrame(list(zip(*[xlistpoints, ylistpoints, v_inputs, axis_inputs, dir_inputs, steps_inputs]))).add_prefix('Col')
@@ -407,7 +476,7 @@ def run_test():
     steps=int(test_txt4.get())
     date=str(test_txt5.get())
     print("args: ", " trials: ", trials, " v_step: ", v_step, " v_max: ", v_max, " steps: ", steps)
-    v_min = 2.3 - v_step  #0.0 + v_step
+    v_min = 1.5 - v_step  #0.0 + v_step
     v_stop = v_max + v_step
     
     ##reset lists to proper values
@@ -448,7 +517,7 @@ def run_test():
     
     ## while loop based on uncert
     v = v_min
-    axis = 1
+    axis = 2
     while v < v_stop:
         i = 0
         while i < trials:
@@ -545,7 +614,7 @@ def run_test():
         
         v += round(v_step, 3)
         
-    axis = 2
+    axis = 1
     v = v_min
     #REPEAT
     while v < v_stop:
