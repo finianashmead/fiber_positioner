@@ -119,39 +119,263 @@ def get_tip():
     imgc = 'ana-' + imagename
     imageme.displaylast(x, imgc)
  
-## TAKEN FROM TKFUN, MIGHT NEED TO CHANGE SOMEWHAT
 def circlefit():
     from fit2circle import calc_R, f_2, fitmycircle
+    
+    date=str(test_txt5.get())
+    # clear data lists
+    xlistpoints.clear()
+    ylistpoints.clear()
+    i=0
+    
+    # trigger keysight several times to take data
+    finian_keysight_trigger_poltest.trigger_keysight(3, 2, 'neg', 50)
+    
+    time.sleep(15)
+    # take photo
+    imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+    DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+    imagename=imagename+".jpg"
+    while os.path.exists(imagename) == False:
+        imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+        DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+        imagename=imagename+".jpg"
+    else:
+        print("IMAGE TAKEN!")            
+    # find tip
+    print('disp: IMAGENAME: ',imagename)
+    pos = get_tip_pos.gettippos(x, imagename)
+    xi = pos[0]
+    yi = pos[1]
+    xlistpoints.append(xi)
+    ylistpoints.append(yi)
+    print("XLISTPOINTS: ", xlistpoints)
+    print("YLISTPOINTS: ", ylistpoints)
+    imgc = 'ana-' + imagename #might not want to dispay
+    i+=1
+    
+    finian_keysight_trigger_poltest.trigger_keysight(3, 1, 'neg', 50)
+    
+    time.sleep(15)
+    # take photo
+    imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+    DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+    imagename=imagename+".jpg"
+    while os.path.exists(imagename) == False:
+        imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+        DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+        imagename=imagename+".jpg"
+    else:
+        print("IMAGE TAKEN!")            
+    # find tip
+    print('disp: IMAGENAME: ',imagename)
+    pos = get_tip_pos.gettippos(x, imagename)
+    xi = pos[0]
+    yi = pos[1]
+    xlistpoints.append(xi)
+    ylistpoints.append(yi)
+    print("XLISTPOINTS: ", xlistpoints)
+    print("YLISTPOINTS: ", ylistpoints)
+    imgc = 'ana-' + imagename #might not want to dispay
+    i+=1
+    
+    finian_keysight_trigger_poltest.trigger_keysight(3, 1, 'neg', 50)
+    
+    time.sleep(15)
+    # take photo
+    imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+    DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+    imagename=imagename+".jpg"
+    while os.path.exists(imagename) == False:
+        imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+        DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+        imagename=imagename+".jpg"
+    else:
+        print("IMAGE TAKEN!")            
+    # find tip
+    print('disp: IMAGENAME: ',imagename)
+    pos = get_tip_pos.gettippos(x, imagename)
+    xi = pos[0]
+    yi = pos[1]
+    xlistpoints.append(xi)
+    ylistpoints.append(yi)
+    print("XLISTPOINTS: ", xlistpoints)
+    print("YLISTPOINTS: ", ylistpoints)
+    imgc = 'ana-' + imagename #might not want to dispay
+    i+=1   
 
+    finian_keysight_trigger_poltest.trigger_keysight(3, 2, 'pos', 50)
+    
+    time.sleep(15)
+    # take photo
+    imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+    DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+    imagename=imagename+".jpg"
+    while os.path.exists(imagename) == False:
+        imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+        DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+        imagename=imagename+".jpg"
+    else:
+        print("IMAGE TAKEN!")            
+    # find tip
+    print('disp: IMAGENAME: ',imagename)
+    pos = get_tip_pos.gettippos(x, imagename)
+    xi = pos[0]
+    yi = pos[1]
+    xlistpoints.append(xi)
+    ylistpoints.append(yi)
+    print("XLISTPOINTS: ", xlistpoints)
+    print("YLISTPOINTS: ", ylistpoints)
+    imgc = 'ana-' + imagename #might not want to dispay
+    i+=1
+    
+    finian_keysight_trigger_poltest.trigger_keysight(3, 2, 'pos', 50)
+    
+    time.sleep(15)
+    # take photo
+    imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+    DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+    imagename=imagename+".jpg"
+    while os.path.exists(imagename) == False:
+        imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+        DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+        imagename=imagename+".jpg"
+    else:
+        print("IMAGE TAKEN!")            
+    # find tip
+    print('disp: IMAGENAME: ',imagename)
+    pos = get_tip_pos.gettippos(x, imagename)
+    xi = pos[0]
+    yi = pos[1]
+    xlistpoints.append(xi)
+    ylistpoints.append(yi)
+    print("XLISTPOINTS: ", xlistpoints)
+    print("YLISTPOINTS: ", ylistpoints)
+    imgc = 'ana-' + imagename #might not want to dispay
+    i+=1
+    
+    finian_keysight_trigger_poltest.trigger_keysight(3, 1, 'pos', 50)
+    
+    time.sleep(15)
+    # take photo
+    imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+    DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+    imagename=imagename+".jpg"
+    while os.path.exists(imagename) == False:
+        imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+        DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+        imagename=imagename+".jpg"
+    else:
+        print("IMAGE TAKEN!")            
+    # find tip
+    print('disp: IMAGENAME: ',imagename)
+    pos = get_tip_pos.gettippos(x, imagename)
+    xi = pos[0]
+    yi = pos[1]
+    xlistpoints.append(xi)
+    ylistpoints.append(yi)
+    print("XLISTPOINTS: ", xlistpoints)
+    print("YLISTPOINTS: ", ylistpoints)
+    imgc = 'ana-' + imagename #might not want to dispay
+    i+=1  
+
+    finian_keysight_trigger_poltest.trigger_keysight(3, 1, 'pos', 50)
+    
+    time.sleep(15)
+    # take photo
+    imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+    DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+    imagename=imagename+".jpg"
+    while os.path.exists(imagename) == False:
+        imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+        DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+        imagename=imagename+".jpg"
+    else:
+        print("IMAGE TAKEN!")            
+    # find tip
+    print('disp: IMAGENAME: ',imagename)
+    pos = get_tip_pos.gettippos(x, imagename)
+    xi = pos[0]
+    yi = pos[1]
+    xlistpoints.append(xi)
+    ylistpoints.append(yi)
+    print("XLISTPOINTS: ", xlistpoints)
+    print("YLISTPOINTS: ", ylistpoints)
+    imgc = 'ana-' + imagename #might not want to dispay
+    i+=1
+    
+    finian_keysight_trigger_poltest.trigger_keysight(3, 2, 'pos', 50)
+    
+    time.sleep(15)
+    # take photo
+    imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+    DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+    imagename=imagename+".jpg"
+    while os.path.exists(imagename) == False:
+        imagename = "circle_test_img_" + "i" + str(i) + '_date_' + date
+        DoPhotoCopy2.takePhotoAndCopy(x,imagename)
+        imagename=imagename+".jpg"
+    else:
+        print("IMAGE TAKEN!")            
+    # find tip
+    print('disp: IMAGENAME: ',imagename)
+    pos = get_tip_pos.gettippos(x, imagename)
+    xi = pos[0]
+    yi = pos[1]
+    xlistpoints.append(xi)
+    ylistpoints.append(yi)
+    print("XLISTPOINTS: ", xlistpoints)
+    print("YLISTPOINTS: ", ylistpoints)
+    imgc = 'ana-' + imagename #might not want to dispay
+    i+=1
+    
+    #original circlefit starting point
     if len(xlistpoints) > 2:
         control = '__main__'
         print('XLISTPOINTS', xlistpoints)
         print('YLISTPOINTS', ylistpoints)
         circlecenterx, circlecentery, circleR, chi2 = fitmycircle(control,xlistpoints,ylistpoints)
         print("fitresult ",circlecenterx, circlecentery, circleR, chi2)
-       
+        
         ## CODE FOR DRAWING CIRCLE ON COPY IMAGE
-        imagename = str(txt.get())
-        imagename=imagename+".jpg"
+        #imagename = str(txt.get())
+        #imagename=imagename+".jpg"
         print('disp: IMAGENAME: ',imagename)
         pos = get_tip_pos.gettippos(x, imagename)
         image = cv2.imread(imagename)
         output = image.copy()
-       
+        
         cx = int(circlecenterx)
         cy = int(circlecentery)
         cr = int(circleR)
         print('CIRCLE X, Y, R: ', cx, cy, cr)
-       
+        
         # draw the circle in the output image, then draw a rectangle corresponding to the center of the circle
         cv2.circle(output, (cx, cy), cr, (0, 255, 0), 8)
         cv2.rectangle(output, (cx - 5, cy - 5), (cx + 5, cy + 5), (0, 128, 255), -1)
         cv2.imwrite('fit-'+imagename,output) # store the output image
-       
+        
         imgf = 'fit-' + imagename
         imageme.displaylast(x, imgf)
+        
+        ##MAKE SCATTERPLOT
+        fig2 = plt.figure(2, figsize=(10,10))
+        ax=fig2.add_subplot(111)
+        ax.scatter(xlistpoints, ylistpoints, c='k', alpha=1.)
+        for i in range(len(xlistpoints)-1):
+            #print('making arrow')
+            ax.arrow(xlistpoints[i], ylistpoints[i], (xlistpoints[i+1]-xlistpoints[i]), (ylistpoints[i+1]-ylistpoints[i]), width=0.5e-4, color='k', 
+                     head_width=1.2, alpha=0.5, length_includes_head=True, head_starts_at_zero=True)
+        circ_2 = plt.Circle((cx,cy), cr, color='r', lw=1.5, ls='-.', fill=False)
+        ax.add_artist(circ_2)
 
-    else:
+        figname2 = 'pos_scatterplot2_'+str(date)+'.png'
+        fig2.savefig(figname2)
+        ## DISPLAY PLOT
+        print('DISPLAY SCATTER')
+        imageme.displaylast(x,figname2)
+
+    else: 
         print("need more data")
         print("XLISTPOINTS: ", xlistpoints)
         print("YLISTPOINTS: ", ylistpoints)
@@ -1169,6 +1393,9 @@ dpc.grid(row = 2, column = 2)
 
 wdb = tkinter.Button(top, text="write data", command=write_csv)
 wdb.grid(row=3, column=2)
+
+fitme = tkinter.Button(top, text="fitcircle",command=circlefit)
+fitme.grid(row=3, column=3)
 
 dispim = tkinter.Button(top, text="display last image", command = displaylast)
 dispim.grid(row = 3, column=0)
