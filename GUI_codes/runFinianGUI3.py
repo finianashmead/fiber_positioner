@@ -1117,7 +1117,7 @@ def go_there():
             print('MADE IT!')
             print('TOOK ', str(i), " ITERATIONS")
             print('INPUT LOCATION: ', 'X_pix: ', xf, 'Y_pix: ', yf)
-            print('CURRENT LOCATION: ', 'X_pix: ', x_ch1test, 'Y_pix: ', y_ch1test)
+            print('CURRENT LOCATION: ', 'X_pix: ', x_test, 'Y_pix: ', y_test)
             #imgc = 'ana-' + imagename
             #imageme.displaylast(x, imgc)
             #i = 0
@@ -1127,7 +1127,7 @@ def go_there():
         else:
             print('NOT THERE YET!')
             print('INPUT LOCATION: ', 'X_pix: ', xf, 'Y_pix: ', yf)
-            print('CURRENT LOCATION: ', 'X_pix: ', x_ch1test, 'Y_pix: ', y_ch1test)
+            print('CURRENT LOCATION: ', 'X_pix: ', x_test, 'Y_pix: ', y_test)
             xi = x_test
             yi = y_test
             print('RESTART LOOP: ITERATION: ', i)
