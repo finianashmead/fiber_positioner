@@ -769,12 +769,7 @@ def calibrate():
     slope1n.append(m11n)
     slope2n.append(m21n)
     theta1n.append(np.rad2deg(np.arctan(m11n)))
-    theta2n.append(np.rad2deg(np.arctan(m21n)))
-    
-    print("SLOPE1p: ", m11p)
-    print("SLOPE1n: ", m11n)
-    print("SLOPE2p: ", m21p)
-    print("SLOPE2n: ", m21n)  
+    theta2n.append(np.rad2deg(np.arctan(m21n)))  
     
     ## volt_disp_linear
     ## ax1
@@ -802,16 +797,21 @@ def calibrate():
    
 ##PLOTTING CODE GOES HERE
 ##PRINT STATEMENTS
+
+    print("SLOPE1p: ", m11p)
+    print("SLOPE1n: ", m11n)
+    print("SLOPE2p: ", m21p)
+    print("SLOPE2n: ", m21n)
    
     print("CALIBRATED")
     print("THETA1P: ", theta1p)
     print("THETA1N: ", theta1n)
     print("THETA2P: ", theta2p)
     print("THETA2N: ", theta2n)
-    print("DISP/VOLT/STEP 1P: ", move1p)
-    print("DISP/VOLT/STEP 1N: ", move1n)
-    print("DISP/VOLT/STEP 2P: ", move2p)
-    print("DISP/VOLT/STEP 2N: ", move2n)
+    print("DISP/STEP 1P: ", move1p)
+    print("DISP/STEP 1N: ", move1n)
+    print("DISP/STEP 2P: ", move2p)
+    print("DISP/STEP 2N: ", move2n)
     
     ## WRITE DF
     filename = 'calibration_data_' + str(date)
@@ -1055,10 +1055,10 @@ def load_cal_data():
     print("THETA1N: ", theta1n)
     print("THETA2P: ", theta2p)
     print("THETA2N: ", theta2n)
-    print("DISP/VOLT/STEP 1P: ", move1p)
-    print("DISP/VOLT/STEP 1N: ", move1n)
-    print("DISP/VOLT/STEP 2P: ", move2p)
-    print("DISP/VOLT/STEP 2N: ", move2n)
+    print("DISP/STEP 1P: ", move1p)
+    print("DISP/STEP 1N: ", move1n)
+    print("DISP/STEP 2P: ", move2p)
+    print("DISP/STEP 2N: ", move2n)
     
     ## WRITE DF
     filename = 'calibration_data_' + str(date)
@@ -1183,10 +1183,16 @@ def go_there():
             move2 = move2n
 
         
-        b = (delta_y - delta_x*m1) / (m2 - m1)
-        a = delta_x - b
+        b = (delta_y - delta_x*m1) / (m2 + m1)
+        a = delta_x + b
+        print('m1; ', m1)
+        print('m2: ', m2)
+        print('a: ', a)
+        print('b: ', b)
         udisp1 = (m1**2 + 1)*(0.5)
         udisp2 = (m2**2 + 1)*(0.5)
+        print('UDISP1: ', udisp1)
+        print('UDISP2: ', udisp2)
         disp1 = a*udisp1
         disp2 = b*udisp2
         print('DISP1: ', disp1)
